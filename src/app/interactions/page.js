@@ -2,6 +2,7 @@
 
 import { DashboardShell } from '@/components/layout/DashboardShell';
 import { useState } from 'react';
+import { Search, Filter } from 'lucide-react';
 
 const initialInteractions = [
   { id: 1, contactName: 'Sarah Johnson', channel: 'email', subject: 'Q1 Outreach', details: 'Email sent to prospect', status: 'sent', date: '2026-10-15', time: '10:30 AM' },
@@ -15,6 +16,7 @@ export default function InteractionsPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [channelFilter, setChannelFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState('all');
+  const [isLoading, setIsLoading] = useState(false);
 
   const filteredInteractions = interactions.filter((interaction) => {
     const matchesSearch = 
@@ -32,7 +34,7 @@ export default function InteractionsPage() {
         <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
           <div className="flex flex-col sm:flex-row gap-3 mb-4">
             <div className="relative flex-1 max-w-md">
-              <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">🔍</span>
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
                 type="text"
                 placeholder="Search interactions..."
@@ -63,7 +65,7 @@ export default function InteractionsPage() {
             </select>
           </div>
           <div className="overflow-x-auto">
-            <table className="w-full">
+            <table className="w-full min-w-[800px]">
               <thead>
                 <tr className="border-b border-gray-200">
                   <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Contact</th>
@@ -80,7 +82,7 @@ export default function InteractionsPage() {
                     <td className="py-3 px-4 text-sm font-medium text-gray-900">{interaction.contactName}</td>
                     <td className="py-3 px-4 text-sm text-gray-600 capitalize">{interaction.channel}</td>
                     <td className="py-3 px-4 text-sm text-gray-600">{interaction.subject}</td>
-                    <td className="py-3 px-4 text-sm text-gray-600">{interaction.details}</td>
+                    <td className="py-3 px-4 text-sm text-gray-600 truncate max-w-[250px]">{interaction.details}</td>
                     <td className="py-3 px-4">
                       <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full capitalize ${
                         interaction.status === 'completed' 

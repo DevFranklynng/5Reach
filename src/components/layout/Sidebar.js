@@ -1,32 +1,44 @@
+"use client";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import {
+  LayoutDashboard,
+  Users,
+  Mail,
+  MessageSquare,
+  Settings,
+  ChevronDown,
+  User,
+} from "lucide-react";
 
 const navItems = [
-  { name: "Dashboard", href: "/", icon: "📊" },
-  { name: "Contacts", href: "/contacts", icon: "👥" },
-  { name: "Campaigns", href: "/campaigns", icon: "📧" },
-  { name: "Interactions", href: "/interactions", icon: "💬" },
+  { name: "Dashboard", href: "/", icon: LayoutDashboard },
+  { name: "Contacts", href: "/contacts", icon: Users },
+  { name: "Campaigns", href: "/campaigns", icon: Mail },
+  { name: "Interactions", href: "/interactions", icon: MessageSquare },
 ];
 
 export function Sidebar() {
   const pathname = usePathname();
   
   return (
-    <aside className="w-[220px] h-full bg-white rounded-2xl shadow-sm border border-gray-100 flex flex-col overflow-hidden">
+    <aside className="hidden md:flex w-[220px] h-full bg-white rounded-2xl shadow-sm border border-gray-100 flex-col overflow-hidden">
       <div className="p-4 border-b border-gray-100">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center">
-            <span className="text-sm">👤</span>
+            <User className="w-4 h-4 text-purple-600" />
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-medium text-gray-900 truncate">RAD5 User</p>
             <p className="text-xs text-gray-500 truncate">Admin</p>
           </div>
-          <span className="text-gray-400">▾</span>
+          <ChevronDown className="w-4 h-4 text-gray-400" />
         </div>
       </div>
       <nav className="flex-1 p-2 space-y-1">
         {navItems.map((item) => {
+          const Icon = item.icon;
           const isActive = pathname === item.href;
           return (
             <Link
@@ -38,7 +50,7 @@ export function Sidebar() {
                   : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
               }`}
             >
-              <span className="text-base">{item.icon}</span>
+              <Icon className="w-4 h-4" />
               <span>{item.name}</span>
             </Link>
           );
@@ -49,7 +61,7 @@ export function Sidebar() {
           href="#"
           className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-900"
         >
-          <span>⚙️</span>
+          <Settings className="w-4 h-4" />
           <span>Settings</span>
         </Link>
       </div>

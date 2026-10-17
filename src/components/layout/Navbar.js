@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { Menu, Search, Bell, X, LayoutDashboard, Users, Mail, MessageSquare } from "lucide-react";
 
 export function Navbar({ title }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   
   return (
-    <header className="bg-white rounded-2xl shadow-sm border border-gray-100 px-6 py-4">
+    <header className="bg-white rounded-2xl shadow-sm border border-gray-100 px-4 md:px-6 py-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           <button
@@ -15,39 +16,41 @@ export function Navbar({ title }) {
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Menu"
           >
-            ☰
+            {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
-          <h1 className="text-xl font-semibold text-gray-900">{title}</h1>
+          <h1 className="text-lg md:text-xl font-semibold text-gray-900">{title}</h1>
         </div>
         <div className="flex items-center gap-4">
           <div className="relative hidden sm:block">
-            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-              🔍
-            </span>
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
             <input
               type="text"
               placeholder="Search..."
-              className="pl-9 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              className="pl-9 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent w-48 md:w-64"
             />
           </div>
           <button className="p-2 rounded-lg hover:bg-gray-50" aria-label="Notifications">
-            🔔
+            <Bell className="w-5 h-5 text-gray-600" />
           </button>
         </div>
       </div>
       {isMenuOpen && (
         <div className="md:hidden mt-4 pb-2 border-t border-gray-100 pt-4">
           <nav className="space-y-2">
-            <Link href="/" className="block px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50">
+            <Link href="/" className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50">
+              <LayoutDashboard className="w-4 h-4" />
               Dashboard
             </Link>
-            <Link href="/contacts" className="block px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50">
+            <Link href="/contacts" className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50">
+              <Users className="w-4 h-4" />
               Contacts
             </Link>
-            <Link href="/campaigns" className="block px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50">
+            <Link href="/campaigns" className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50">
+              <Mail className="w-4 h-4" />
               Campaigns
             </Link>
-            <Link href="/interactions" className="block px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50">
+            <Link href="/interactions" className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50">
+              <MessageSquare className="w-4 h-4" />
               Interactions
             </Link>
           </nav>

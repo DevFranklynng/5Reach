@@ -2,6 +2,7 @@
 
 import { DashboardShell } from '@/components/layout/DashboardShell';
 import { useState } from 'react';
+import { Search, Plus, Loader2, Check } from 'lucide-react';
 
 const initialCampaigns = [
   { id: 1, name: 'Q1 Outreach', description: 'First quarter outreach campaign', channel: 'email', status: 'completed', recipients: 150, scheduledAt: '2026-01-15' },
@@ -19,6 +20,7 @@ const contacts = [
 export default function CampaignsPage() {
   const [campaigns, setCampaigns] = useState(initialCampaigns);
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -40,20 +42,23 @@ export default function CampaignsPage() {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     if (!formData.name || selectedRecipients.length === 0) return;
-    
-    const newCampaign = {
-      id: Math.max(...campaigns.map((c) => c.id)) + 1,
-      name: formData.name,
-      description: formData.description,
-      channel: formData.channel,
-      status: 'draft',
-      recipients: selectedRecipients.length,
-      scheduledAt: formData.scheduledAt || null,
-    };
-    setCampaigns([...campaigns, newCampaign]);
-    setIsFormOpen(false);
-    setFormData({ name: '', description: '', channel: 'email', scheduledAt: '' });
-    setSelectedRecipients([]);
+    setIsLoading(true);
+    setTimeout(() => {
+      const newCampaign = {
+        id: Math.max(...campaigns.map((c) => c.id)) + 1,
+        name: formData.name,
+        description: formData.description,
+        channel: formData.channel,
+        status: 'draft',
+        recipients: selectedRecipients.length,
+        scheduledAt: formData.scheduledAt || null,
+      };
+      setCampaigns([...campaigns, newCampaign]);
+      setIsLoading(false);
+      setIsFormOpen(false);
+      setFormData({ name: '', description: '', channel: 'email', scheduledAt: '' });
+      setSelectedRecipients([]);
+    }, 300);
   };
 
   const handleSelectRecipient = (contactId) => {
@@ -80,13 +85,14 @@ export default function CampaignsPage() {
             <h2 className="text-lg font-semibold text-gray-900">Campaigns</h2>
             <button
               onClick={() => setIsFormOpen(true)}
-              className="px-4 py-2 bg-purple-600 text-white rounded-lg text-sm font-medium hover:bg-purple-700 transition-colors"
+              className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg text-sm font-medium hover:bg-purple-700 transition-colors"
             >
-              + Create Campaign
+              <Plus className="w-4 h-4" />
+              Create Campaign
             </button>
           </div>
           <div className="overflow-x-auto">
-            <table className="w-full">
+            <table className="w-full min-w-[600px]">
               <thead>
                 <tr className="border-b border-gray-200">
                   <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
@@ -133,7 +139,7 @@ export default function CampaignsPage() {
       </div>
       {isFormOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto">
-          <div className="bg-white rounded-xl max-w-2xl w-full p-6 my-4">
+          <div className="bg-white rounded-xl max-w-2xl w-full p-6 my-4 max-h-[90vh] overflow-y-auto">
             <h2 className="text-lg font-semibold text-gray-900 mb-4">Create Campaign</h2>
             <form onSubmit={handleFormSubmit} className="space-y-4">
               <div>
@@ -155,7 +161,7 @@ export default function CampaignsPage() {
                   rows="3"
                 />
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Channel</label>
                   <select
@@ -184,7 +190,7 @@ export default function CampaignsPage() {
                   <p className="text-xs text-gray-500">{selectedRecipients.length} selected</p>
                 </div>
                 <div className="relative mb-3">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">🔍</span>
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
                   <input
                     type="text"
                     placeholder="Search recipients..."
@@ -228,12 +234,13 @@ export default function CampaignsPage() {
                   )}
                 </div>
               </div>
-              <div className="flex gap-3 pt-4">
+              <div className="flex flex-col sm:flex-row gap-3 pt-4">
                 <button
                   type="submit"
-                  disabled={!formData.name || selectedRecipients.length === 0}
-                  className="flex-1 px-4 py-2 bg-purple-600 text-white rounded-lg text-sm font-medium hover:bg-purple-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                  disabled={!formData.name || selectedRecipients.length === 0 || isLoading}
+                  className="flex-1 px-4 py-2 bg-purple-600 text-white rounded-lg text-sm font-medium hover:bg-purple-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
+                  {isLoading && <Loader2 className="w-4 h-4 animate-spin" />}
                   Create Campaign
                 </button>
                 <button

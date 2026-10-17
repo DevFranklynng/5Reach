@@ -2,6 +2,7 @@
 
 import { DashboardShell } from '@/components/layout/DashboardShell';
 import { useState } from 'react';
+import { Search, Plus, Edit2, Loader2 } from 'lucide-react';
 
 const initialContacts = [
   { id: 1, firstName: 'Sarah', lastName: 'Johnson', email: 'sarah@example.com', phone: '+1-555-0101', company: 'Acme Inc', status: 'active', tags: ['lead'] },
@@ -16,6 +17,7 @@ export default function ContactsPage() {
   const [selectedContacts, setSelectedContacts] = useState([]);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingContact, setEditingContact] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -73,20 +75,23 @@ export default function ContactsPage() {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     if (!formData.firstName) return;
-    
-    if (editingContact) {
-      setContacts(contacts.map((c) => 
-        c.id === editingContact.id ? { ...c, ...formData } : c
-      ));
-    } else {
-      const newContact = {
-        id: Math.max(...contacts.map((c) => c.id)) + 1,
-        ...formData,
-        tags: [],
-      };
-      setContacts([...contacts, newContact]);
-    }
-    setIsFormOpen(false);
+    setIsLoading(true);
+    setTimeout(() => {
+      if (editingContact) {
+        setContacts(contacts.map((c) => 
+          c.id === editingContact.id ? { ...c, ...formData } : c
+        ));
+      } else {
+        const newContact = {
+          id: Math.max(...contacts.map((c) => c.id)) + 1,
+          ...formData,
+          tags: [],
+        };
+        setContacts([...contacts, newContact]);
+      }
+      setIsLoading(false);
+      setIsFormOpen(false);
+    }, 300);
   };
 
   return (
@@ -96,7 +101,7 @@ export default function ContactsPage() {
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
             <div className="flex flex-col sm:flex-row gap-3 flex-1">
               <div className="relative flex-1 max-w-md">
-                <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">🔍</span>
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <input
                   type="text"
                   placeholder="Search contacts..."
@@ -118,9 +123,10 @@ export default function ContactsPage() {
             </div>
             <button
               onClick={handleAddContact}
-              className="px-4 py-2 bg-purple-600 text-white rounded-lg text-sm font-medium hover:bg-purple-700 transition-colors"
+              className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg text-sm font-medium hover:bg-purple-700 transition-colors"
             >
-              + Add Contact
+              <Plus className="w-4 h-4" />
+              Add Contact
             </button>
           </div>
           {selectedContacts.length > 0 && (
@@ -131,7 +137,7 @@ export default function ContactsPage() {
             </div>
           )}
           <div className="overflow-x-auto">
-            <table className="w-full">
+            <table className="w-full min-w-[700px]">
               <thead>
                 <tr className="border-b border-gray-200">
                   <th className="text-left py-3 px-4">
@@ -164,7 +170,7 @@ export default function ContactsPage() {
                     <td className="py-3 px-4 text-sm text-gray-900">
                       {contact.firstName} {contact.lastName}
                     </td>
-                    <td className="py-3 px-4 text-sm text-gray-600">{contact.email}</td>
+                    <td className="py-3 px-4 text-sm text-gray-600 truncate max-w-[200px]">{contact.email}</td>
                     <td className="py-3 px-4 text-sm text-gray-600">{contact.phone}</td>
                     <td className="py-3 px-4 text-sm text-gray-600">{contact.company}</td>
                     <td className="py-3 px-4">
@@ -181,8 +187,9 @@ export default function ContactsPage() {
                     <td className="py-3 px-4">
                       <button
                         onClick={() => handleEditContact(contact)}
-                        className="text-sm text-purple-600 hover:text-purple-800 font-medium"
+                        className="flex items-center gap-1 text-sm text-purple-600 hover:text-purple-800 font-medium"
                       >
+                        <Edit2 className="w-3 h-3" />
                         Edit
                       </button>
                     </td>
@@ -200,12 +207,12 @@ export default function ContactsPage() {
       </div>
       {isFormOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-xl max-w-md w-full p-6">
+          <div className="bg-white rounded-xl max-w-md w-full p-6 max-h-[90vh] overflow-y-auto">
             <h2 className="text-lg font-semibold text-gray-900 mb-4">
               {editingContact ? 'Edit Contact' : 'Add Contact'}
             </h2>
             <form onSubmit={handleFormSubmit} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">First Name *</label>
                   <input
@@ -265,11 +272,13 @@ export default function ContactsPage() {
                   <option value="archived">Archived</option>
                 </select>
               </div>
-              <div className="flex gap-3 pt-4">
+              <div className="flex flex-col sm:flex-row gap-3 pt-4">
                 <button
                   type="submit"
-                  className="flex-1 px-4 py-2 bg-purple-600 text-white rounded-lg text-sm font-medium hover:bg-purple-700 transition-colors"
+                  disabled={isLoading}
+                  className="flex-1 px-4 py-2 bg-purple-600 text-white rounded-lg text-sm font-medium hover:bg-purple-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
+                  {isLoading && <Loader2 className="w-4 h-4 animate-spin" />}
                   {editingContact ? 'Update' : 'Add'}
                 </button>
                 <button
