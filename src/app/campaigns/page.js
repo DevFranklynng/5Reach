@@ -2,20 +2,11 @@
 
 import { DashboardShell } from '@/components/layout/DashboardShell';
 import { useState } from 'react';
-import { Search, Plus, Loader2, Check } from 'lucide-react';
+import { Search, Plus, Loader2 } from 'lucide-react';
 
-const initialCampaigns = [
-  { id: 1, name: 'Q1 Outreach', description: 'First quarter outreach campaign', channel: 'email', status: 'completed', recipients: 150, scheduledAt: '2026-01-15' },
-  { id: 2, name: 'Product Launch', description: 'New product announcement', channel: 'both', status: 'active', recipients: 85, scheduledAt: '2026-02-01' },
-  { id: 3, name: 'Follow-up Campaign', description: 'Follow up with prospects', channel: 'sms', status: 'draft', recipients: 200, scheduledAt: null },
-];
+const initialCampaigns = [];
 
-const contacts = [
-  { id: 1, firstName: 'Sarah', lastName: 'Johnson', email: 'sarah@example.com', company: 'Acme Inc' },
-  { id: 2, firstName: 'Mike', lastName: 'Davis', email: 'mike@example.com', company: 'TechCo' },
-  { id: 3, firstName: 'Lisa', lastName: 'Chen', email: 'lisa@example.com', company: 'BizCorp' },
-  { id: 4, firstName: 'John', lastName: 'Smith', email: 'john@example.com', company: 'StartupXYZ' },
-];
+const contacts = [];
 
 export default function CampaignsPage() {
   const [campaigns, setCampaigns] = useState(initialCampaigns);
@@ -32,10 +23,10 @@ export default function CampaignsPage() {
 
   const filteredRecipients = contacts.filter((contact) => {
     const matchesSearch = 
-      contact.firstName.toLowerCase().includes(recipientSearch.toLowerCase()) ||
-      contact.lastName.toLowerCase().includes(recipientSearch.toLowerCase()) ||
-      contact.email.toLowerCase().includes(recipientSearch.toLowerCase()) ||
-      contact.company.toLowerCase().includes(recipientSearch.toLowerCase());
+      (contact.firstName?.toLowerCase().includes(recipientSearch.toLowerCase()) || false) ||
+      (contact.lastName?.toLowerCase().includes(recipientSearch.toLowerCase()) || false) ||
+      (contact.email?.toLowerCase().includes(recipientSearch.toLowerCase()) || false) ||
+      (contact.company?.toLowerCase().includes(recipientSearch.toLowerCase()) || false);
     return matchesSearch;
   });
 
@@ -45,7 +36,7 @@ export default function CampaignsPage() {
     setIsLoading(true);
     setTimeout(() => {
       const newCampaign = {
-        id: Math.max(...campaigns.map((c) => c.id)) + 1,
+        id: campaigns.length > 0 ? Math.max(...campaigns.map((c) => c.id)) + 1 : 1,
         name: formData.name,
         description: formData.description,
         channel: formData.channel,
@@ -211,26 +202,31 @@ export default function CampaignsPage() {
                       Select All ({filteredRecipients.length})
                     </label>
                   </div>
-                  {filteredRecipients.map((contact) => (
-                    <div key={contact.id} className="p-3 border-b border-gray-100 last:border-b-0">
-                      <label className="flex items-start gap-2">
-                        <input
-                          type="checkbox"
-                          checked={selectedRecipients.includes(contact.id)}
-                          onChange={() => handleSelectRecipient(contact.id)}
-                          className="mt-0.5 rounded border-gray-300 text-purple-600 focus:ring-purple-500"
-                        />
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-gray-900">{contact.firstName} {contact.lastName}</p>
-                          <p className="text-xs text-gray-500">{contact.email} • {contact.company}</p>
-                        </div>
-                      </label>
+                  {filteredRecipients.length === 0 && contacts.length === 0 ? (
+                    <div className="p-4 text-center">
+                      <p className="text-sm text-gray-500">No recipients available</p>
                     </div>
-                  ))}
-                  {filteredRecipients.length === 0 && (
+                  ) : filteredRecipients.length === 0 ? (
                     <div className="p-4 text-center">
                       <p className="text-sm text-gray-500">No recipients found</p>
                     </div>
+                  ) : (
+                    filteredRecipients.map((contact) => (
+                      <div key={contact.id} className="p-3 border-b border-gray-100 last:border-b-0">
+                        <label className="flex items-start gap-2">
+                          <input
+                            type="checkbox"
+                            checked={selectedRecipients.includes(contact.id)}
+                            onChange={() => handleSelectRecipient(contact.id)}
+                            className="mt-0.5 rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+                          />
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-medium text-gray-900">{contact.firstName} {contact.lastName}</p>
+                            <p className="text-xs text-gray-500">{contact.email} • {contact.company}</p>
+                          </div>
+                        </label>
+                      </div>
+                    ))
                   )}
                 </div>
               </div>

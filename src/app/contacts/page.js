@@ -4,11 +4,7 @@ import { DashboardShell } from '@/components/layout/DashboardShell';
 import { useState } from 'react';
 import { Search, Plus, Edit2, Loader2 } from 'lucide-react';
 
-const initialContacts = [
-  { id: 1, firstName: 'Sarah', lastName: 'Johnson', email: 'sarah@example.com', phone: '+1-555-0101', company: 'Acme Inc', status: 'active', tags: ['lead'] },
-  { id: 2, firstName: 'Mike', lastName: 'Davis', email: 'mike@example.com', phone: '+1-555-0102', company: 'TechCo', status: 'active', tags: ['customer'] },
-  { id: 3, firstName: 'Lisa', lastName: 'Chen', email: 'lisa@example.com', phone: '+1-555-0103', company: 'BizCorp', status: 'inactive', tags: ['lead'] },
-];
+const initialContacts = [];
 
 export default function ContactsPage() {
   const [contacts, setContacts] = useState(initialContacts);
@@ -29,10 +25,10 @@ export default function ContactsPage() {
 
   const filteredContacts = contacts.filter((contact) => {
     const matchesSearch = 
-      contact.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      contact.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      contact.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      contact.company.toLowerCase().includes(searchTerm.toLowerCase());
+      (contact.firstName?.toLowerCase().includes(searchTerm.toLowerCase()) || false) ||
+      (contact.lastName?.toLowerCase().includes(searchTerm.toLowerCase()) || false) ||
+      (contact.email?.toLowerCase().includes(searchTerm.toLowerCase()) || false) ||
+      (contact.company?.toLowerCase().includes(searchTerm.toLowerCase()) || false);
     const matchesStatus = statusFilter === 'all' || contact.status === statusFilter;
     return matchesSearch && matchesStatus;
   });
@@ -62,12 +58,12 @@ export default function ContactsPage() {
   const handleEditContact = (contact) => {
     setEditingContact(contact);
     setFormData({
-      firstName: contact.firstName,
-      lastName: contact.lastName,
-      email: contact.email,
-      phone: contact.phone,
-      company: contact.company,
-      status: contact.status,
+      firstName: contact.firstName || '',
+      lastName: contact.lastName || '',
+      email: contact.email || '',
+      phone: contact.phone || '',
+      company: contact.company || '',
+      status: contact.status || 'active',
     });
     setIsFormOpen(true);
   };
@@ -83,7 +79,7 @@ export default function ContactsPage() {
         ));
       } else {
         const newContact = {
-          id: Math.max(...contacts.map((c) => c.id)) + 1,
+          id: contacts.length > 0 ? Math.max(...contacts.map((c) => c.id)) + 1 : 1,
           ...formData,
           tags: [],
         };

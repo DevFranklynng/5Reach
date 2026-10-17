@@ -2,27 +2,21 @@
 
 import { DashboardShell } from '@/components/layout/DashboardShell';
 import { useState } from 'react';
-import { Search, Filter } from 'lucide-react';
+import { Search } from 'lucide-react';
 
-const initialInteractions = [
-  { id: 1, contactName: 'Sarah Johnson', channel: 'email', subject: 'Q1 Outreach', details: 'Email sent to prospect', status: 'sent', date: '2026-10-15', time: '10:30 AM' },
-  { id: 2, contactName: 'Mike Davis', channel: 'sms', subject: 'Product Demo', details: 'SMS delivered successfully', status: 'delivered', date: '2026-10-15', time: '11:15 AM' },
-  { id: 3, contactName: 'Lisa Chen', channel: 'email', subject: 'Follow-up', details: 'Reply received', status: 'completed', date: '2026-10-15', time: '02:45 PM' },
-  { id: 4, contactName: 'John Smith', channel: 'call', subject: 'Discovery Call', details: 'Call completed', status: 'completed', date: '2026-10-14', time: '03:20 PM' },
-];
+const initialInteractions = [];
 
 export default function InteractionsPage() {
   const [interactions] = useState(initialInteractions);
   const [searchTerm, setSearchTerm] = useState('');
   const [channelFilter, setChannelFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState('all');
-  const [isLoading, setIsLoading] = useState(false);
 
   const filteredInteractions = interactions.filter((interaction) => {
     const matchesSearch = 
-      interaction.contactName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      interaction.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      interaction.details.toLowerCase().includes(searchTerm.toLowerCase());
+      (interaction.contactName?.toLowerCase().includes(searchTerm.toLowerCase()) || false) ||
+      (interaction.subject?.toLowerCase().includes(searchTerm.toLowerCase()) || false) ||
+      (interaction.details?.toLowerCase().includes(searchTerm.toLowerCase()) || false);
     const matchesChannel = channelFilter === 'all' || interaction.channel === channelFilter;
     const matchesStatus = statusFilter === 'all' || interaction.status === statusFilter;
     return matchesSearch && matchesChannel && matchesStatus;
@@ -62,6 +56,7 @@ export default function InteractionsPage() {
               <option value="sent">Sent</option>
               <option value="delivered">Delivered</option>
               <option value="completed">Completed</option>
+              <option value="failed">Failed</option>
             </select>
           </div>
           <div className="overflow-x-auto">
@@ -91,6 +86,8 @@ export default function InteractionsPage() {
                           ? 'bg-blue-100 text-blue-800'
                           : interaction.status === 'sent'
                           ? 'bg-yellow-100 text-yellow-800'
+                          : interaction.status === 'failed'
+                          ? 'bg-red-100 text-red-800'
                           : 'bg-gray-100 text-gray-800'
                       }`}>
                         {interaction.status}

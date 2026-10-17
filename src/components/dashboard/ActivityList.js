@@ -1,15 +1,7 @@
 import React from 'react';
 
 export function ActivityList({ activities = [], isLoading = false, error = null }) {
-  const defaultActivities = [
-    { id: 1, action: 'Email sent to Sarah Johnson', time: '2 hours ago', type: 'email' },
-    { id: 2, action: 'SMS delivered to Mike Davis', time: '3 hours ago', type: 'sms' },
-    { id: 3, action: 'New contact added: John Smith', time: '5 hours ago', type: 'contact' },
-    { id: 4, action: 'Campaign completed: Q1 Outreach', time: '1 day ago', type: 'campaign' },
-    { id: 5, action: 'Reply received from Lisa Chen', time: '2 days ago', type: 'reply' },
-  ];
-
-  const items = activities.length > 0 ? activities : defaultActivities;
+  const items = activities;
 
   const getIcon = (type) => {
     switch (type) {
@@ -33,7 +25,7 @@ export function ActivityList({ activities = [], isLoading = false, error = null 
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
         <div className="h-5 bg-gray-200 rounded w-32 mb-4 animate-pulse"></div>
         <div className="space-y-3">
-          {[...Array(5)].map((_, i) => (
+          {[...Array(4)].map((_, i) => (
             <div key={i} className="flex items-start gap-3">
               <div className="w-5 h-5 bg-gray-200 rounded animate-pulse"></div>
               <div className="flex-1">

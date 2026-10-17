@@ -30,8 +30,7 @@ export function Sidebar() {
             <User className="w-4 h-4 text-purple-600" />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-gray-900 truncate">RAD5 User</p>
-            <p className="text-xs text-gray-500 truncate">Admin</p>
+            <p className="text-sm font-medium text-gray-900 truncate">User</p>
           </div>
           <ChevronDown className="w-4 h-4 text-gray-400" />
         </div>
