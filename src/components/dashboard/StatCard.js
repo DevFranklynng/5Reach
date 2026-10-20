@@ -4,26 +4,26 @@ export function StatCard({ icon: Icon, label, value, trend, trendColor = 'gray' 
   const getTrendColor = () => {
     switch (trendColor) {
       case 'green':
-        return 'text-green-600';
+        return 'text-[#72B89A]';
       case 'red':
-        return 'text-red-600';
+        return 'text-[#E8793E]';
       default:
-        return 'text-gray-500';
+        return 'text-[#92979D]';
     }
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 hover:shadow-md transition-shadow">
-      <div className="flex items-start justify-between mb-2">
-        {Icon && <Icon className="w-5 h-5 text-purple-600" />}
+    <div className="bg-[#202326] border border-[#2A2C30] rounded-xl p-4 hover:border-[#E8793E]/30 transition-colors">
+      <div className="flex items-start justify-between mb-3">
+        {Icon && <Icon className="w-5 h-5 text-[#E8793E]" />}
         {trend && (
           <span className={`text-xs font-medium ${getTrendColor()}`}>
             {trend}
           </span>
         )}
       </div>
-      <p className="text-2xl font-semibold text-gray-900 mb-1">{value}</p>
-      <p className="text-xs text-gray-500">{label}</p>
+      <p className="text-2xl font-semibold text-[#F3EFE8] mb-1">{value}</p>
+      <p className="text-xs text-[#92979D]">{label}</p>
     </div>
   );
 }

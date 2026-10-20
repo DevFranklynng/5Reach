@@ -93,23 +93,23 @@ export default function ContactsPage() {
   return (
     <DashboardShell title="Contacts">
       <div className="space-y-6">
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4">
+        <div className="bg-[#202326] border border-[#2A2C30] rounded-xl p-4">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
             <div className="flex flex-col sm:flex-row gap-3 flex-1">
               <div className="relative flex-1 max-w-md">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-[#92979D]" />
                 <input
                   type="text"
                   placeholder="Search contacts..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-9 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  className="w-full pl-9 pr-4 py-2 bg-[#151719] border border-[#2A2C30] rounded-lg text-sm text-[#F3EFE8] placeholder-[#92979D] focus:outline-none focus:ring-2 focus:ring-[#E8793E] focus:border-transparent"
                 />
               </div>
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="px-3 py-2 bg-[#151719] border border-[#2A2C30] rounded-lg text-sm text-[#F3EFE8] focus:outline-none focus:ring-2 focus:ring-[#E8793E] focus:border-transparent"
               >
                 <option value="all">All Status</option>
                 <option value="active">Active</option>
@@ -119,15 +119,15 @@ export default function ContactsPage() {
             </div>
             <button
               onClick={handleAddContact}
-              className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg text-sm font-medium hover:bg-purple-700 transition-colors"
+              className="flex items-center gap-2 px-4 py-2 bg-[#E8793E] text-white rounded-lg text-sm font-medium hover:bg-[#d66a2f] transition-colors focus:outline-none focus:ring-2 focus:ring-[#E8793E] focus:ring-offset-2 focus:ring-offset-[#202326]"
             >
               <Plus className="w-4 h-4" />
               Add Contact
             </button>
           </div>
           {selectedContacts.length > 0 && (
-            <div className="bg-purple-50 border border-purple-200 rounded-lg p-3 mb-4">
-              <p className="text-sm text-purple-700">
+            <div className="bg-[#E8793E]/10 border border-[#E8793E]/30 rounded-lg p-3 mb-4">
+              <p className="text-sm text-[#F3EFE8]">
                 {selectedContacts.length} contact{selectedContacts.length !== 1 ? 's' : ''} selected
               </p>
             </div>
@@ -135,47 +135,47 @@ export default function ContactsPage() {
           <div className="overflow-x-auto">
             <table className="w-full min-w-[700px]">
               <thead>
-                <tr className="border-b border-gray-200">
+                <tr className="border-b border-[#2A2C30]">
                   <th className="text-left py-3 px-4">
                     <input
                       type="checkbox"
                       checked={selectedContacts.length === filteredContacts.length && filteredContacts.length > 0}
                       onChange={handleSelectAll}
-                      className="rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+                      className="rounded border-[#2A2C30] bg-[#151719] text-[#E8793E] focus:ring-[#E8793E]"
                     />
                   </th>
-                  <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                  <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                  <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Phone</th>
-                  <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Company</th>
-                  <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                  <th className="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                  <th className="text-left py-3 px-4 text-xs font-medium text-[#92979D] uppercase tracking-wider">Name</th>
+                  <th className="text-left py-3 px-4 text-xs font-medium text-[#92979D] uppercase tracking-wider">Email</th>
+                  <th className="text-left py-3 px-4 text-xs font-medium text-[#92979D] uppercase tracking-wider">Phone</th>
+                  <th className="text-left py-3 px-4 text-xs font-medium text-[#92979D] uppercase tracking-wider">Company</th>
+                  <th className="text-left py-3 px-4 text-xs font-medium text-[#92979D] uppercase tracking-wider">Status</th>
+                  <th className="text-left py-3 px-4 text-xs font-medium text-[#92979D] uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredContacts.map((contact) => (
-                  <tr key={contact.id} className="border-b border-gray-100 hover:bg-gray-50">
+                  <tr key={contact.id} className="border-b border-[#2A2C30] hover:bg-[#2A2C30]/50">
                     <td className="py-3 px-4">
                       <input
                         type="checkbox"
                         checked={selectedContacts.includes(contact.id)}
                         onChange={() => handleSelectContact(contact.id)}
-                        className="rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+                        className="rounded border-[#2A2C30] bg-[#151719] text-[#E8793E] focus:ring-[#E8793E]"
                       />
                     </td>
-                    <td className="py-3 px-4 text-sm text-gray-900">
+                    <td className="py-3 px-4 text-sm text-[#F3EFE8]">
                       {contact.firstName} {contact.lastName}
                     </td>
-                    <td className="py-3 px-4 text-sm text-gray-600 truncate max-w-[200px]">{contact.email}</td>
-                    <td className="py-3 px-4 text-sm text-gray-600">{contact.phone}</td>
-                    <td className="py-3 px-4 text-sm text-gray-600">{contact.company}</td>
+                    <td className="py-3 px-4 text-sm text-[#92979D] truncate max-w-[200px]">{contact.email}</td>
+                    <td className="py-3 px-4 text-sm text-[#92979D]">{contact.phone}</td>
+                    <td className="py-3 px-4 text-sm text-[#92979D]">{contact.company}</td>
                     <td className="py-3 px-4">
                       <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
                         contact.status === 'active' 
-                          ? 'bg-green-100 text-green-800' 
+                          ? 'bg-[#72B89A]/10 text-[#72B89A]' 
                           : contact.status === 'inactive'
-                          ? 'bg-yellow-100 text-yellow-800'
-                          : 'bg-gray-100 text-gray-800'
+                          ? 'bg-[#E8793E]/10 text-[#E8793E]'
+                          : 'bg-[#92979D]/10 text-[#92979D]'
                       }`}>
                         {contact.status}
                       </span>
@@ -183,7 +183,7 @@ export default function ContactsPage() {
                     <td className="py-3 px-4">
                       <button
                         onClick={() => handleEditContact(contact)}
-                        className="flex items-center gap-1 text-sm text-purple-600 hover:text-purple-800 font-medium"
+                        className="flex items-center gap-1 text-sm text-[#E8793E] hover:text-[#F3EFE8] font-medium"
                       >
                         <Edit2 className="w-3 h-3" />
                         Edit
@@ -195,73 +195,73 @@ export default function ContactsPage() {
             </table>
             {filteredContacts.length === 0 && (
               <div className="text-center py-8">
-                <p className="text-gray-500">No contacts found</p>
+                <p className="text-[#92979D]">No contacts found</p>
               </div>
             )}
           </div>
         </div>
       </div>
       {isFormOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-xl max-w-md w-full p-6 max-h-[90vh] overflow-y-auto">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">
+        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50">
+          <div className="bg-[#202326] border border-[#2A2C30] rounded-xl max-w-md w-full p-6 max-h-[90vh] overflow-y-auto">
+            <h2 className="text-lg font-semibold text-[#F3EFE8] mb-4">
               {editingContact ? 'Edit Contact' : 'Add Contact'}
             </h2>
             <form onSubmit={handleFormSubmit} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">First Name *</label>
+                  <label className="block text-sm font-medium text-[#F3EFE8] mb-1">First Name *</label>
                   <input
                     type="text"
                     value={formData.firstName}
                     onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full px-3 py-2 bg-[#151719] border border-[#2A2C30] rounded-lg text-sm text-[#F3EFE8] placeholder-[#92979D] focus:outline-none focus:ring-2 focus:ring-[#E8793E] focus:border-transparent"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
+                  <label className="block text-sm font-medium text-[#F3EFE8] mb-1">Last Name</label>
                   <input
                     type="text"
                     value={formData.lastName}
                     onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="w-full px-3 py-2 bg-[#151719] border border-[#2A2C30] rounded-lg text-sm text-[#F3EFE8] placeholder-[#92979D] focus:outline-none focus:ring-2 focus:ring-[#E8793E] focus:border-transparent"
                   />
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                <label className="block text-sm font-medium text-[#F3EFE8] mb-1">Email</label>
                 <input
                   type="email"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full px-3 py-2 bg-[#151719] border border-[#2A2C30] rounded-lg text-sm text-[#F3EFE8] placeholder-[#92979D] focus:outline-none focus:ring-2 focus:ring-[#E8793E] focus:border-transparent"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                <label className="block text-sm font-medium text-[#F3EFE8] mb-1">Phone</label>
                 <input
                   type="text"
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full px-3 py-2 bg-[#151719] border border-[#2A2C30] rounded-lg text-sm text-[#F3EFE8] placeholder-[#92979D] focus:outline-none focus:ring-2 focus:ring-[#E8793E] focus:border-transparent"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Company</label>
+                <label className="block text-sm font-medium text-[#F3EFE8] mb-1">Company</label>
                 <input
                   type="text"
                   value={formData.company}
                   onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full px-3 py-2 bg-[#151719] border border-[#2A2C30] rounded-lg text-sm text-[#F3EFE8] placeholder-[#92979D] focus:outline-none focus:ring-2 focus:ring-[#E8793E] focus:border-transparent"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                <label className="block text-sm font-medium text-[#F3EFE8] mb-1">Status</label>
                 <select
                   value={formData.status}
                   onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  className="w-full px-3 py-2 bg-[#151719] border border-[#2A2C30] rounded-lg text-sm text-[#F3EFE8] focus:outline-none focus:ring-2 focus:ring-[#E8793E] focus:border-transparent"
                 >
                   <option value="active">Active</option>
                   <option value="inactive">Inactive</option>
@@ -272,7 +272,7 @@ export default function ContactsPage() {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="flex-1 px-4 py-2 bg-purple-600 text-white rounded-lg text-sm font-medium hover:bg-purple-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="flex-1 px-4 py-2 bg-[#E8793E] text-white rounded-lg text-sm font-medium hover:bg-[#d66a2f] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-[#E8793E] focus:ring-offset-2 focus:ring-offset-[#202326]"
                 >
                   {isLoading && <Loader2 className="w-4 h-4 animate-spin" />}
                   {editingContact ? 'Update' : 'Add'}
@@ -280,7 +280,7 @@ export default function ContactsPage() {
                 <button
                   type="button"
                   onClick={() => setIsFormOpen(false)}
-                  className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors"
+                  className="flex-1 px-4 py-2 bg-transparent border border-[#2A2C30] text-[#F3EFE8] rounded-lg text-sm font-medium hover:bg-[#2A2C30] transition-colors focus:outline-none focus:ring-2 focus:ring-[#E8793E] focus:ring-offset-2 focus:ring-offset-[#202326]"
                 >
                   Cancel
                 </button>
