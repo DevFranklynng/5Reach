@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -26,11 +26,10 @@ export function Sidebar() {
       <div className="p-5 border-b border-[#2A2C30]">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-lg bg-[#E8793E]/10 flex items-center justify-center">
-            <span className="text-[#E8793E] font-semibold text-sm">R5</span>
+            <span className="text-[#E8793E] font-semibold text-sm">5R</span>
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-semibold text-[#F3EFE8] truncate">RAD5</p>
-            <p className="text-xs text-[#92979D] truncate">Outreach</p>
+            <p className="text-sm font-semibold text-[#F3EFE8] truncate">5Reach</p>
           </div>
         </div>
       </div>
@@ -40,8 +39,7 @@ export function Sidebar() {
             <User className="w-4 h-4 text-[#E8793E]" />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm text-[#F3EFE8] truncate">User</p>
-            <p className="text-xs text-[#92979D] truncate">Admin</p>
+            <p className="text-sm text-[#F3EFE8] truncate">Admin</p>
           </div>
         </div>
       </div>
