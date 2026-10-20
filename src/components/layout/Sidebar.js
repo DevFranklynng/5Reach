@@ -8,7 +8,6 @@ import {
   Mail,
   MessageSquare,
   Settings,
-  ChevronDown,
   User,
 } from "lucide-react";
 
@@ -23,19 +22,30 @@ export function Sidebar() {
   const pathname = usePathname();
   
   return (
-    <aside className="hidden md:flex w-[220px] h-full bg-white rounded-2xl shadow-sm border border-gray-100 flex-col overflow-hidden">
-      <div className="p-4 border-b border-gray-100">
+    <aside className="hidden md:flex w-[240px] min-h-screen bg-[#202326] border-r border-[#2A2C30] flex-col overflow-hidden sticky top-0">
+      <div className="p-5 border-b border-[#2A2C30]">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center">
-            <User className="w-4 h-4 text-purple-600" />
+          <div className="w-9 h-9 rounded-lg bg-[#E8793E]/10 flex items-center justify-center">
+            <span className="text-[#E8793E] font-semibold text-sm">R5</span>
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-gray-900 truncate">User</p>
+            <p className="text-sm font-semibold text-[#F3EFE8] truncate">RAD5</p>
+            <p className="text-xs text-[#92979D] truncate">Outreach</p>
           </div>
-          <ChevronDown className="w-4 h-4 text-gray-400" />
         </div>
       </div>
-      <nav className="flex-1 p-2 space-y-1">
+      <div className="px-4 pt-4 pb-2">
+        <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-[#2A2C30] transition-colors">
+          <div className="w-8 h-8 rounded-full bg-[#E8793E]/10 flex items-center justify-center">
+            <User className="w-4 h-4 text-[#E8793E]" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm text-[#F3EFE8] truncate">User</p>
+            <p className="text-xs text-[#92979D] truncate">Admin</p>
+          </div>
+        </div>
+      </div>
+      <nav className="flex-1 px-2 pb-2 space-y-1">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = pathname === item.href;
@@ -43,22 +53,22 @@ export function Sidebar() {
             <Link
               key={item.name}
               href={item.href}
-              className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${
+              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors ${
                 isActive
-                  ? "bg-gray-100 text-gray-900"
-                  : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                  ? "bg-[#E8793E]/10 text-[#F3EFE8] border-l-2 border-[#E8793E]"
+                  : "text-[#92979D] hover:bg-[#2A2C30] hover:text-[#F3EFE8]"
               }`}
             >
-              <Icon className="w-4 h-4" />
+              <Icon className={`w-4 h-4 ${isActive ? "text-[#E8793E]" : ""}`} />
               <span>{item.name}</span>
             </Link>
           );
         })}
       </nav>
-      <div className="p-2 border-t border-gray-100">
+      <div className="p-2 border-t border-[#2A2C30] mt-auto">
         <Link
           href="#"
-          className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+          className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-[#92979D] hover:bg-[#2A2C30] hover:text-[#F3EFE8] transition-colors"
         >
           <Settings className="w-4 h-4" />
           <span>Settings</span>
