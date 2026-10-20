@@ -39,7 +39,7 @@ export function Sidebar() {
             <User className="w-4 h-4 text-[#E8793E]" />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm text-[#F3EFE8] truncate">User</p>
+            <p className="text-sm text-[#F3EFE8] truncate">Admin</p>
           </div>
         </div>
       </div>
